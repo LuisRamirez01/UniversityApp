@@ -7,11 +7,14 @@ import Model.Teacher;
 import java.util.List;
 
 public interface UniversityService {
-    public List<Teacher> getTeachers();
-    public List<Course> getCourses();
-    public List<Student> getStudents();
-    public Student getStudentByName(String name);
-    public void createStudent(String name, int age);
-    public void createCourse(String name,String assignedClassroom,List<Student> students,Teacher teacher);
-    public void addStudentToCourse(Student student,String courseName);
+    List<Teacher> getTeachers();
+    List<Course> getCourses();
+    List<Student> getStudents();
+    boolean validateTeacherExists(String name);
+    boolean validateStudentExists(String name);
+    Student getStudentByName(String name);
+    Teacher getTeacherByName(String name);
+    void createStudent(String name, int age);
+    void createCourse(String name,String assignedClassroom,List<Student> students,Teacher teacher);
+    void addStudentToCourse(Student student,String courseName);
 }

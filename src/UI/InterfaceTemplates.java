@@ -5,6 +5,7 @@ import Model.Student;
 import Model.Teacher;
 import Service.IUniversityService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,7 +49,7 @@ public class InterfaceTemplates {
         }
     }
 
-    public void printTeachersName(){
+    private void printTeachersName(){
         System.out.println("LIST OF TEACHERS\n");
         int counter = 1;
         for (Teacher teacher :
@@ -58,17 +59,17 @@ public class InterfaceTemplates {
         }
     }
 
-    public void printStudentsNameUniversity() {
+    private void printStudentsNameUniversity() {
         System.out.println("LIST OF STUDENTS\n");
         int counter = 1;
         for (Student student :
                 service.getStudents()) {
-            System.out.println(counter + ".- " + student.getName() + "\n");
+            System.out.println(counter + ".- " + student.getName() + " - Code: " + student.getId() + "\n");
             counter++;
         }
     }
 
-    public void printStudentsNameCourse(List<Student> students){
+    private void printStudentsNameCourse(List<Student> students){
         System.out.println("List of Students: ");
         int counter = 1;
         for (Student student :
@@ -88,7 +89,7 @@ public class InterfaceTemplates {
         }
     }
     public void printCourseInfo(){
-        System.out.println("Please, select the course you want information about: ");
+        System.out.println("Please, Enter the name of the course you want information about: ");
         String courseSelected = sc.nextLine();
         boolean courseFound = false;
         separateData();
@@ -130,18 +131,94 @@ public class InterfaceTemplates {
         System.out.println("Please Insert The Assigned Classroom:");
         String assignedClassroom = sc.nextLine();
         printTeachersName();
-        System.out.println("From the above list choose the Teacher's Name to this Course:");
-        String teacherName = sc.nextLine();
-        printStudentsNameUniversity();
-        System.out.println("From the above list insert the students to this Course: (separate the values with ',')");
-        System.out.println("Example: Luis,Cris,Mark");
-        String studentList = sc.nextLine();
-        studentList.split(",");
+        System.out.println("From the above list choose the Teacher's Name for this Course:");
+        boolean teacherFound = false;
+        Teacher teacher = new Teacher("","") {
+            @Override
+            public double getSalary() {
+                return 0;
+            }
+        };
+        while (!teacherFound){
+            String teacherName = sc.nextLine();
+            teacherFound = service.validateTeacherExists(teacherName);
+            if (teacherFound){
+                 teacher = service.getTeacherByName(teacherName);
+            }else {
+                System.out.println("Please, Insert an existing teacher from the list: ");
+            }
+        }
+        System.out.println("**** Inserting Student Sub Menu ****");
+        List<Student> studentsToBeAdded = new ArrayList<>();
+        boolean isOver = false;
+        while (!isOver){
+            System.out.println("Select an option: ");
+            System.out.println("1.- Add student");
+            System.out.println("2.- Exit");
+            String optionPicked = sc.nextLine();
+            if (optionPicked.equalsIgnoreCase("1")) {
+                printStudentsNameUniversity();
+                System.out.println("Insert the student name to be enrolled:");
+                boolean studentFound = false;
+                while (!studentFound){
+                    String studentName = sc.nextLine();
+                    studentFound = service.validateStudentExists(studentName);
+                    boolean studentExistInTheCourse = false;
+                    for (Student student :
+                            studentsToBeAdded) {
+                        if (student.getName().equalsIgnoreCase(studentName)) {
+                            System.out.println("The student is already enrolled\n");
+                            studentExistInTheCourse = true;
+                        }
+                    }
+                    if (!studentExistInTheCourse){
+                        if (studentFound){
+                            Student student = service.getStudentByName(studentName);
+                            studentsToBeAdded.add(student);
+                            System.out.println("Student Added to the course successfully!\n");
+                        }else {
+                            System.out.println("\nPlease, Insert an existing student from the list: ");
+                        }
+                    }
+                }
+            } else {
+                isOver = true;
+                service.createCourse(courseName,assignedClassroom,studentsToBeAdded,teacher);
+                System.out.println("\nThe course was created successfully!\n");
+            }
+        }
+    }
 
+    public void listStudentCourses(){
+        printStudentsNameUniversity();
+       Student studentFound = new Student();
+        List<String> coursesName = new ArrayList<>();
+        System.out.println("Enter the name of the student to get info about him courses: ");
+        boolean studentExists = false;
+        while (!studentExists){
+            String studentName = sc.nextLine();
+            studentExists = service.validateStudentExists(studentName);
+            if (studentExists){
+                studentFound = service.getStudentByName(studentName);
+                for (Course course :
+                        courses) {
+                   List<Student> students = course.getStudents();
+                    for (Student student :
+                            students) {
+                        if (student.getName().equalsIgnoreCase(studentName)){
+                            coursesName.add(course.getName());
+                        }
+                    }
+                }
+            }else {
+                System.out.println("Please, Enter the name of an existing Student");
+            }
+        }
+        System.out.println("\n" + studentFound.getName() + " is enrolled in: " + coursesName);
     }
 
     public void printGoodBye(){
-        System.out.println("Thanks for using our service. GoodBye");
+        System.out.println("\nThanks for using our service. GoodBye");
     }
 
 

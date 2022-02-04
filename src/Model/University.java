@@ -8,9 +8,6 @@ public class University {
     private List<Student> students;
     private List<Course> courses;
 
-    public University() {
-    }
-
     public University(List<Teacher> teachers, List<Student> students, List<Course> courses) {
         this.teachers = teachers;
         this.students = students;
@@ -21,24 +18,12 @@ public class University {
         return teachers;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
-    }
-
     public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
     public List<Course> getCourses() {
         return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
     }
 
     public void addStudent(Student student){
@@ -70,6 +55,39 @@ public class University {
                 students) {
             if (student.getName().equalsIgnoreCase(name)) {
                 studentFound = student;
+            }
+        }
+        return studentFound;
+    }
+
+    public Teacher getTeacherByName(String name) {
+        Teacher teacherFound = null;
+        for (Teacher teacher :
+                teachers) {
+            if (teacher.getName().equalsIgnoreCase(name)) {
+                teacherFound = teacher;
+            }
+        }
+        return teacherFound;
+    }
+
+    public boolean validateTeacherExists(String name){
+        boolean teacherFound = false;
+        for (Teacher teacher:
+                teachers){
+            if (teacher.getName().equalsIgnoreCase(name)){
+                teacherFound = true;
+            }
+        }
+        return teacherFound;
+    }
+
+    public boolean validateStudentExists(String name) {
+        boolean studentFound = false;
+        for (Student student:
+                students){
+            if (student.getName().equalsIgnoreCase(name)) {
+                studentFound = true;
             }
         }
         return studentFound;

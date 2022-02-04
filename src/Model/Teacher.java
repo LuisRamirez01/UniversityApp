@@ -15,17 +15,9 @@ public abstract class Teacher extends Person{
         return baseSalary;
     }
 
-    public void setBaseSalary(Double baseSalary) {
-        this.baseSalary = baseSalary;
-    }
-
     public abstract double getSalary();
 
     public String getServiceType() {
         return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
     }
 }

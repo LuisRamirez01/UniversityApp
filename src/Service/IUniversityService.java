@@ -29,8 +29,23 @@ public class IUniversityService implements UniversityService{
     }
 
     @Override
+    public boolean validateTeacherExists(String name) {
+        return data.validateTeacherExists(name);
+    }
+
+    @Override
+    public boolean validateStudentExists(String name) {
+        return data.validateStudentExists(name);
+    }
+
+    @Override
     public Student getStudentByName(String name) {
         return data.getStudentByName(name);
+    }
+
+    @Override
+    public Teacher getTeacherByName(String name) {
+        return data.getTeacherByName(name);
     }
 
     @Override

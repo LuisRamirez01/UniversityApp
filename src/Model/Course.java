@@ -22,36 +22,12 @@ public class Course {
         counter++;
     }
 
-    public Long getCode() {
-        return code;
-    }
-
-    public void setCode(Long code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAssignedClassroom() {
-        return assignedClassroom;
-    }
-
-    public void setAssignedClassroom(String assignedClassroom) {
-        this.assignedClassroom = assignedClassroom;
-    }
-
     public List<Student> getStudents() {
         return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 
     public Teacher getTeacher() {

@@ -1,8 +1,8 @@
+package Test;
+
 import UI.InterfaceTemplates;
 
-import java.util.Scanner;
-
-public class Main {
+public class Runner {
     public static void main(String[] args) {
 
         InterfaceTemplates ui = new InterfaceTemplates();
@@ -29,8 +29,14 @@ public class Main {
                     ui.separateData();
                     break;
                 case "d":
+                    ui.separateData();
+                    ui.createCourseMenu();
+                    ui.separateData();
                     break;
                 case "e":
+                    ui.separateData();
+                    ui.listStudentCourses();
+                    ui.separateData();
                     break;
                 case "f":
                     isOver = true;
