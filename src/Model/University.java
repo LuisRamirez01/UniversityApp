@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class University {
@@ -45,6 +46,21 @@ public class University {
             }
         }
         return courseFound;
+    }
+
+    public List<String> getCoursesByStudent(Student studentUniversity){
+        List<String> coursesName = new ArrayList<>();
+        for (Course course :
+                courses) {
+            List<Student> students = course.getStudents();
+            for (Student studentCourse :
+                    students) {
+                if (studentCourse.getName().equalsIgnoreCase(studentUniversity.getName())){
+                    coursesName.add(course.getName());
+                }
+            }
+        }
+        return coursesName;
     }
 
     public Student getStudentByName(String name){

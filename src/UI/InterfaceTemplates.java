@@ -191,7 +191,7 @@ public class InterfaceTemplates {
 
     public void listStudentCourses(){
         printStudentsNameUniversity();
-       Student studentFound = new Student();
+        Student studentFound = new Student();
         List<String> coursesName = new ArrayList<>();
         System.out.println("Enter the name of the student to get info about him courses: ");
         boolean studentExists = false;
@@ -200,16 +200,7 @@ public class InterfaceTemplates {
             studentExists = service.validateStudentExists(studentName);
             if (studentExists){
                 studentFound = service.getStudentByName(studentName);
-                for (Course course :
-                        courses) {
-                   List<Student> students = course.getStudents();
-                    for (Student student :
-                            students) {
-                        if (student.getName().equalsIgnoreCase(studentName)){
-                            coursesName.add(course.getName());
-                        }
-                    }
-                }
+                coursesName = service.getCoursesByStudent(studentFound);
             }else {
                 System.out.println("Please, Enter the name of an existing Student");
             }

@@ -10,6 +10,7 @@ public interface UniversityService {
     List<Teacher> getTeachers();
     List<Course> getCourses();
     List<Student> getStudents();
+    List<String> getCoursesByStudent(Student student);
     boolean validateTeacherExists(String name);
     boolean validateStudentExists(String name);
     Student getStudentByName(String name);
